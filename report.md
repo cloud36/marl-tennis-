@@ -15,9 +15,9 @@ Multi-agent DDPG’s can be used for cooperative and competitive multi-agent RL 
 * Competitive: This is where agents work against each other, each to maximize their own goal. 
 
 MADDPG modifies DDPG to make it useful for MARL in the following ways.
-    * Actor
-        * Only use their own observations at execution time. 
-    * Critic 
-        * Is augmented with information about policies of different agents during training. That is the critic estimates a centralized action-value function, it takes actions of all agents as input along with state information and abouts the q-function for agent i. 
+* Actor
+    * Only use their own observations at execution time. 
+* Critic 
+    * Is augmented with information about policies of different agents during training. That is the critic estimates a centralized action-value function, it takes actions of all agents as input along with state information and abouts the q-function for agent i. 
 
 Below is a diagram of the actor-critic MADDPG where Qi through Qn are the critics (q-functions) 
