@@ -4,11 +4,22 @@ import copy
 import os
 import yaml
 from collections import namedtuple, deque
+from models import Actor, Critic
 
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
 
+hyper = {'BUFFER_SIZE' : int(1e5)  # replay buffer size
+,'BATCH_SIZE'     : 200            # minibatch size
+,'GAMMA'          : 0.99           # discount factor
+,'TAU'            : 0.001          # for soft update of target parameters
+,'LR_ACTOR'       : 0.0001         # learning rate of the actor
+,'LR_CRITIC'      : 0.001          # learning rate of the critic
+,'WEIGHT_DECAY'   : 0.0001         # L2 weight decay
+,'UPDATE_EVERY'   : 2              # timesteps between updates
+,'NOISE_SIGMA'    : 0.2            # sigma for Ornstein-Uhlenbeck noise
+,'USE_BATCH_NORM' : False }
 
 class MADDPG(object):
     def __init__(self, state_size, action_size, num_agents, rand_seed, hyper):
@@ -20,7 +31,8 @@ class MADDPG(object):
         self.action_size  = action_size
         self.act_size     = action_size * num_agents
         self.state_size   = state_size * num_agents
-        self.l_agents     = [DDPG(state_size, action_size, rand_seed, hyper, self.num_agents, self.memory) for i in range(num_agents)]
+        self.hyper        = hyper
+        self.l_agents     = [DDPG(state_size, action_size, rand_seed, self.hyper  , self.num_agents, self.memory) for i in range(num_agents)]
 
     def step(self, states, actions, rewards, next_states, dones):
         experience = zip(self.l_agents, states, actions, rewards, next_states, dones)
