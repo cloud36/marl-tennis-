@@ -1,6 +1,6 @@
-# Project 3 
+# Project 3: Deep Reinforcement Learning Nanodegree
 
-## (Deep Reinforcement Learning Nanodegree) Multi-Agent RL.
+## Multi-Agent RL
 
 ## Overview 
 
